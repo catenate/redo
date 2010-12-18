@@ -1,0 +1,70 @@
+#!/dis/sh
+if {~ $#indent 0} {
+	indent = ''
+}
+ 
+field1sed = 's,[ 	].+$,,'
+field2sed = 's,^.*[ 	],,'
+
+sum = md5sum
+
+target = $1
+if {~ $target '*.do.do'} {exit}
+echo redo $indent^$target >[1=2]
+
+olddepsum = 0
+newdepsum = 0
+if {ftest -s $target^.dep} {
+	olddepsum = `{cat $target^.dep.sum >[2]/dev/null | sed $field1sed}
+	
+	apply {
+		thisindent = $indent
+		indent = '  '^$indent
+		redo $1
+		indent = $thisindent
+		if {! $sum $1 >[2]/dev/null} {echo '0	'^$1}
+	} `{sed $field2sed $target^.dep} > $target^.dep.new
+
+	mv $target^.dep.new $target^.dep
+	newdepsum = `{$sum $target^.dep >[2]/dev/null}
+	if {! ~ $#newdepsum 0} {echo $newdepsum > $target^.dep.sum}
+}
+
+if {or {ftest -x $target^.do.do} {ftest -x default.do.do}} {
+	thisindent = $indent
+	indent = '  '^$indent
+	redo $target^.do
+	indent = $thisindent
+}
+
+if {ftest -x $target^.do} {
+	olddosum = `{cat $target^.do.sum >[2]/dev/null | sed $field1sed}
+	newdosum = `{$sum $target^.do >[2]/dev/null}
+	do = ./^$target^.do
+} {
+	filesed = 's,(.*)\.[^.]+$,\1,'
+	extsed = 's,.*\.([^.]+)$,\1,'
+
+	filext = $target
+	file = `{echo $filext | sed $filesed}
+	ext = `{echo $filext | sed $extsed}
+	
+	if {ftest -x default.^$ext^.do} {
+		olddosum = `{cat $target^.do.sum >[2]/dev/null | sed $field1sed}
+		newdosum = `{$sum default.^$ext^.do >[2]/dev/null}
+		do = ./default.^$ext^.do $filext
+	} {
+		#echo redo: no $target^.do or default.^$ext^.do >[1=2]
+		exit
+	}
+}
+
+if {and {! ~ $#newdosum 0} {! ~ $olddosum $newdosum}} {
+	echo $newdosum > $target^.do.sum
+}
+
+if {or {! ~ $olddepsum $newdepsum} {! ~ $olddosum $newdosum} {! ftest -e $target}} {
+	$do
+}
+
+exit

@@ -1,0 +1,8 @@
+/dis/oder
+cp /media/69C4-9275/acme-0.13/nb/pub/test/*.do /media/69C4-9275/acme-0.13/nb/pub/limbos/hw.b /media/69C4-9275/acme-0.13/nb/pub/limbos/guide .
+date; ls -ltr
+echo '0	clean' > distclean.dep
+echo; redo dep hw.dis clean
+redo distclean
+rm hw.dis
+|sort|uniq

@@ -1,0 +1,16 @@
+/dis/oder
+cp /media/69C4-9275/acme-0.13/nb/pub/test/default.do.do /media/69C4-9275/acme-0.13/nb/pub/test/guide .
+cp ndo.do do.do
+date; ls -ltr
+echo; redo 1
+ftest(1)
+redo 2
+redo 3 4 5 6 7 8 9
+rm -f *.sum
+rm -f 1* 2* 3* 4* 5* 6* 7* 8* 9*
+sh(1)
+sh-std(1)
+|sort|uniq
+
+echo '0	2
+0	3' > 1.dep

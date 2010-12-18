@@ -1,0 +1,13 @@
+This is a minimal edition of redo: more inspired by, than implemented from,
+D. J. Bernstein’s description at http://cr.yp.to/redo.html
+
+It is not parallel (so does not have locks), its feature set has been
+selectively edited, it stores checksums and generated files in the
+same directory as source, it has (and may continue to have) no real
+database, and doesn’t have the same interface.
+
+dis/ contains /dis/sh scripts for the acme-sac shell.
+
+test/ contains tests.  test/dis/ builds a Limbo hello-world program
+into a Dis executable.  test/do/ creates *.do scripts from a
+default.do.do, and then runs them to create files.
