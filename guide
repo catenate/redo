@@ -3,5 +3,5 @@
 
 git status
 git add .
-git commit -a -m ''
+git commit -a -m 'update notes'
 git push origin master

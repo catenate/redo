@@ -1,0 +1,55 @@
+nb google group
+http://groups.google.com/group/redo-list/topics
+
+
+nb announce thread
+http://groups.google.com/group/redo-list/browse_thread/thread/89bae2e6db2715fe#
+
+
+nb github project jcatena acmesac plan9port
+jcatena: I created a github project at http://github.com/catenate/redo
+to write a very minimal redo for acme-sac (aka Inferno for Windows)
+and plan9port (aka Plan 9 for *nix).  …
+
+
+nb djbernstein describe redo
+… It is more inspired by, than implemented from, D. J. Bernstein’s
+description at http://cr.yp.to/redo.html …
+
+
+nb implement different feature checksum file database interface
+… It is not parallel (so does not have locks), its feature set has
+been selectively edited, it stores checksums and generated files in
+the same directory as source, it has (and may continue to have) no
+real database, and doesn’t have the same interface.  …
+
+
+nb catredo status
+… At the moment it only contains scripts for the acme-sac shell,
+a from-scratch implementation which might interest this group.  …
+
+
+nb dependency target dep file md5sum file name redo ifchange
+… A distinct feature is that it stores dependencies for a target in a
+file called target.dep, which contains md5sum and filename for each
+file depended upon.  This stands in for redo-ifchange, which is not in
+the *.do scripts.  …
+
+
+nb redo ifchange separate concern generate dependency target
+… I recognize that this might mean that creating dependencies is less
+flexible than with redo-ifchange.  I value more separating the two
+concerns: generate the dependencies first, for example with "redo
+target.dep" to run target.dep.do, and then "redo target" to redo each
+target in target.dep, and execute target.do only once.  …
+
+
+nb test compile limbo hello world b source dis executable
+… It has a simple *.do test scripts to (1) build a Limbo hello-world
+program into a Dis executable, clean, distribute-clean, and generate
+dependencies (eg, hw.dis depends on hw.b); …
+
+
+nb test generate default do script trivial file
+… and (2) use a default.do.do to create *.do scripts, and then run
+them to create trivial files.
